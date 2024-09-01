@@ -122,7 +122,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   life: 10
   speed: 40
-  player: {fileID: 130434892416826447}
 --- !u!54 &6295341413730882480
 Rigidbody:
   m_ObjectHideFlags: 0
