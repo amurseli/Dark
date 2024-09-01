@@ -48,7 +48,6 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
             StartCoroutine(Dash(move));
-            Debug.Log("Dashed");
             canDash = false;
             StartCoroutine(DashCooldown());
         }
@@ -63,7 +62,6 @@ public class PlayerMovement : MonoBehaviour
         float startTime = Time.time;
         while (Time.time < startTime + dashTime)
         {
-            Debug.Log("Shitholemotherfuckaaa");
             controller.Move(move * (dashSpeed * Time.deltaTime));
             yield return null;
         }
