@@ -12,14 +12,19 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject, life);
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
         var enemy = other.gameObject.GetComponent<Enemy>();
+        var player = other.gameObject.GetComponent<PlayerCombat>();
         if (enemy != null)
         {
             enemy.GetHit(1);
         }
         Debug.Log("Hitted an enemy!");
-        Destroy(gameObject);
+
+        if (player == null)
+        {
+            Destroy(gameObject);
+        }
     }
 }
