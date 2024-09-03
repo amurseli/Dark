@@ -47,7 +47,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Steps: 5
-    - _Transparency: 0.183
+    - _Transparency: 0.662
     m_Colors:
     - _EmissionColor: {r: 0, g: 0.3251847, b: 0.5, a: 0}
   m_BuildTextureStacks: []
