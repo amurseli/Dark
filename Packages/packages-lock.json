@@ -199,6 +199,14 @@
       },
       "url": "https://packages.unity.com"
     },
+    "moe.meryuhi.effects.fog": {
+      "version": "file:C:/Users/agust/Desktop/URPFog/Packages/Fog",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {
+        "com.unity.render-pipelines.universal": "14.0.0"
+      }
+    },
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 0,
