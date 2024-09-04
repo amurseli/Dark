@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -10,9 +8,9 @@ public class PlayerMovement : MonoBehaviour
 
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
+    
     private bool isGrounded;
     private bool canDash = true;
-    
     
     [Header("Movement Attributes")]
     public float jumpForce = 20f;
@@ -20,51 +18,69 @@ public class PlayerMovement : MonoBehaviour
     public float dashTime = 0.25f;
     public float speed = 12f;
     public float gravity = -9.8f;
+    
+    // New attribute for terminal velocity
+    [Header("Terminal Velocity")]
+    public float terminalVelocity = -50f; // Set terminal fall velocity
 
     private Vector3 velocity;
     
     void Update()
     {
+        // Check if grounded
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (isGrounded && velocity.y < 0)
         {
+            // Reset velocity when grounded
             velocity.y = -2f;   
         }
-        
+
+        // Handle jumping
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
-            velocity.y += Mathf.Sqrt(jumpForce * -1 * gravity);
+            Debug.Log("Jumps!");
+            velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
         }
 
-        
+        // Get input
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
+        // Calculate movement direction
         Vector3 move = transform.right * x + transform.forward * z;
 
-        controller.Move(move * (speed * Time.deltaTime));
+        // Apply movement
+        controller.Move(move * speed * Time.deltaTime);
         
+        // Handle dashing
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
             StartCoroutine(Dash(move));
-            canDash = false;
-            StartCoroutine(DashCooldown());
         }
-
+        
+        // Apply gravity
         velocity.y += gravity * Time.deltaTime;
 
+        // Apply terminal fall velocity - Clamp velocity.y to prevent it from exceeding terminalVelocity
+        velocity.y = Mathf.Max(velocity.y, terminalVelocity);
+
+        // Move player according to velocity
         controller.Move(velocity * Time.deltaTime);
     }
 
     IEnumerator Dash(Vector3 move)
     {
+        canDash = false;
         float startTime = Time.time;
+
         while (Time.time < startTime + dashTime)
         {
-            controller.Move(move * (dashSpeed * Time.deltaTime));
+            controller.Move(move * dashSpeed * Time.deltaTime);
             yield return null;
         }
+
+        StartCoroutine(DashCooldown());
     }
 
     IEnumerator DashCooldown()
