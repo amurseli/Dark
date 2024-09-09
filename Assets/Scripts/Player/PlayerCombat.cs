@@ -39,7 +39,7 @@ public class PlayerCombat : MonoBehaviour
         var enemy = other.gameObject.GetComponent<Enemy>();
         if (enemy != null)
         {
-            Debug.Log("HELL IS FOREEEVEEERRR");
+            //Debug.Log("HELL IS FOREEEVEEERRR");
         }
         
     }

@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private bool canDash = true;
     
     [Header("Movement Attributes")]
-    public float jumpForce = 20f;
+    public float jumpForce = 10f;
     public float dashSpeed = 50f;
     public float dashTime = 0.25f;
     public float speed = 12f;
@@ -67,6 +67,11 @@ public class PlayerMovement : MonoBehaviour
 
         // Move player according to velocity
         controller.Move(velocity * Time.deltaTime);
+    }
+    
+    public void removeFallVelocity()
+    {
+        velocity.y = -2f;
     }
 
     IEnumerator Dash(Vector3 move)

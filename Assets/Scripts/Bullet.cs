@@ -20,7 +20,7 @@ public class Bullet : MonoBehaviour
         {
             enemy.GetHit(1);
         }
-        Debug.Log("Hitted an enemy!");
+        //Debug.Log("Hitted an enemy!");
 
         if (player == null)
         {
