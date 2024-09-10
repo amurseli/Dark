@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     public CharacterController controller;
+    public PlayerSlash playerSlash;
     public Transform groundCheck;
 
     public float groundDistance = 0.4f;
@@ -24,7 +26,9 @@ public class PlayerMovement : MonoBehaviour
     public float terminalVelocity = -50f; // Set terminal fall velocity
 
     private Vector3 velocity;
-    
+
+
+
     void Update()
     {
         // Check if grounded
@@ -37,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Handle jumping
-        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
+        if ((isGrounded || playerSlash.canJumpPostSlash) && Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("Jumps!");
             velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);

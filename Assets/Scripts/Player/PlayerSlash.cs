@@ -7,6 +7,7 @@ public class PlayerSlash : MonoBehaviour
     private Transform cameraPointer;
     private CharacterController controller;
     private bool canSlash = true;
+    public bool canJumpPostSlash { get; set; } = false;
     
     [Header("SlashAttributes")]
     [Tooltip("Recorrido total que va a hacer, además de distancia de chequeo. Si un enemigo esta a 5 y este valor es 10, va a hacer 5 para llegar hasta el y otro 5 para completar los 10, por ejemplo")]
@@ -41,6 +42,9 @@ public class PlayerSlash : MonoBehaviour
         // Asegúrate de llegar al destino final
         transform.gameObject.GetComponent<PlayerMovement>().removeFallVelocity();
         controller.Move(targetPosition - transform.position);
+        //canJumpPostSlash = true;
+        //yield return new WaitForSeconds(2f);
+        //canJumpPostSlash = false;
     }
 
     private void Update()

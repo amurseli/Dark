@@ -4,18 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : EnemyBase
 {
-    [Header("Basic Attributes")]
-    public float rotationSpeed = 5f;
-    public float acceleration = 100f;
-    public float velocity = 10f;
-    public float life = 10f;
-    public float damage = 10f;
-    
-    [Header("Colors")]
-    public Color baseColor;
-    public Color hitColor;
 
     private GameObject player;
 
@@ -23,36 +13,14 @@ public class Enemy : MonoBehaviour
     {
         get => player.transform.position + Vector3.up;
     }
-
-    private List<Material> materials = new List<Material>();
     private float orgDrag;
     
     private List<Vector3> waypoints = new List<Vector3>();
     private Vector3 lastPosition;
+    private bool isFloaterEnemy = false;
     private bool wiggleExists;
     private float stuckTimer = -1;
     private Rigidbody rb;
-    
-
-    public void GetHit(float dmg)
-    {
-        life -= dmg;
-        foreach (var mat in materials)
-        {
-            mat.SetColor("_EmissionColor", hitColor);
-        }
-
-        StartCoroutine(FeedbackHit());
-    }
-
-    IEnumerator FeedbackHit()
-    {
-        yield return new WaitForSeconds(0.1f);
-        foreach (var mat in materials)
-        {
-            mat.SetColor("_EmissionColor", baseColor);
-        }
-    }
 
     private void Start()
     {
@@ -84,13 +52,27 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        //if (player == null) return; // Exit if player is not found
-
-        //Vector3 vec = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
-        //gameObject.GetComponent<Rigidbody>().MovePosition(vec);
 
         if (player == null) return;
-        
+
+        if (!isFloaterEnemy)
+        {
+            HandleRegularMovement();
+            
+        }
+        else
+        {
+            //HandleFloaterMovement();
+        }
+
+        if (life <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    void HandleRegularMovement()
+    {
         var targetDirection = (targetPosition - transform.position).normalized;
         if (!Physics.SphereCast(new Ray(transform.position, targetDirection), 0.5f,
                 Vector3.Distance(transform.position, targetPosition), LayerMask.GetMask("Ground") ) &&
@@ -112,11 +94,6 @@ public class Enemy : MonoBehaviour
         {
             waypoints.RemoveAt(0);
             wiggleExists = false;
-        }
-
-        if (life <= 0)
-        {
-            Destroy(gameObject);
         }
     }
 
@@ -150,7 +127,6 @@ public class Enemy : MonoBehaviour
             
             if (Time.time > stuckTimer + 1f)
             {
-                Debug.Log("Stuck!");
                 var randomInCircle = UnityEngine.Random.insideUnitSphere * 4f;
                 var wigglePosition = rb.position + new Vector3(randomInCircle.x, randomInCircle.y, randomInCircle.z);
                 if (!wiggleExists)
