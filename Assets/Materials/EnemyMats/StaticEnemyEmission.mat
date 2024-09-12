@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: EnemyBaseEmission
+  m_Name: StaticEnemyEmission
   m_Shader: {fileID: -6465566751694194690, guid: da2efe333d1ed3f44aed76c84d6fce53,
     type: 3}
   m_Parent: {fileID: 0}
@@ -42,7 +42,7 @@ Material:
     - _QueueOffset: 0
     - _Strength: 1.6
     m_Colors:
-    - _Color: {r: 0.16037738, g: 0, b: 0, a: 0}
+    - _Color: {r: 0.036667857, g: 0.039002143, b: 0.0754717, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &2325238491401407521
 MonoBehaviour:

@@ -43,7 +43,6 @@ public class PlayerMovement : MonoBehaviour
         // Handle jumping
         if ((isGrounded || playerSlash.canJumpPostSlash) && Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("Jumps!");
             velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
         }
 

@@ -33,12 +33,8 @@ public class Enemy : EnemyBase
                 materials.Add(renderer.materials.First());
             }
         }
-        //Physics.IgnoreCollision(GetComponent<SphereCollider>(), player.GetComponent<CapsuleCollider>());
         orgDrag = rb.drag;
         
-        //targetPosition = player.transform.position;
-
-        Debug.Log($"Number of children: {transform.childCount}");
     }
 
     private void Awake()
@@ -62,12 +58,46 @@ public class Enemy : EnemyBase
         }
         else
         {
-            //HandleFloaterMovement();
+            HandleFloaterMovement();
         }
 
         if (life <= 0)
         {
-            Destroy(gameObject);
+            die();
+        }
+    }
+
+    protected override void die()
+    {
+        UISingleton.Instance.addScore();
+        Destroy(gameObject);
+    }
+    
+    void HandleFloaterMovement()
+    {
+        var targetDirection = (targetPosition - transform.position).normalized;
+        if (!Physics.SphereCast(new Ray(transform.position, targetDirection), 0.5f,
+                Vector3.Distance(transform.position, targetPosition), LayerMask.GetMask("Ground") ) &&
+            !Physics.CheckSphere(transform.position + targetDirection, 0.5f,  LayerMask.GetMask("Ground")))
+        {
+            waypoints.Clear();
+            var floatingPosition = new Vector3(targetPosition.x, targetPosition.y + 20, targetPosition.z);
+            waypoints.Add(floatingPosition);
+            
+        }
+        
+        if(waypoints.Count > 0 && Vector3.Distance(waypoints.Last(), targetPosition) > 1f)
+        {
+            var floatingPosition = new Vector3(targetPosition.x, targetPosition.y + 200, targetPosition.z);
+            waypoints.Add(floatingPosition);
+        }
+
+        if (waypoints.Count == 0) return;
+        
+        if(Vector3.Distance(transform.position, waypoints.Last()) < 2f)
+        {
+            waypoints.RemoveAt(0);
+            wiggleExists = false;
         }
     }
 

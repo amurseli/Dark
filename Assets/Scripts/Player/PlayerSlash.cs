@@ -40,11 +40,11 @@ public class PlayerSlash : MonoBehaviour
         }
 
         // Asegúrate de llegar al destino final
-        transform.gameObject.GetComponent<PlayerMovement>().removeFallVelocity();
+        //transform.gameObject.GetComponent<PlayerMovement>().removeFallVelocity();
         controller.Move(targetPosition - transform.position);
-        //canJumpPostSlash = true;
-        //yield return new WaitForSeconds(2f);
-        //canJumpPostSlash = false;
+        canJumpPostSlash = true;
+        yield return new WaitForSeconds(2f);
+        canJumpPostSlash = false;
     }
 
     private void Update()
@@ -63,7 +63,6 @@ public class PlayerSlash : MonoBehaviour
                 if (enemy != null)
                 {
                     enemy.GetHit(slashDamage);
-                    Debug.Log($"SLASHED! {enemyPos} {playerPosition}");
 
                     // Calcula la dirección hacia el enemigo y establece la posición final del dash
                     var directionToEnemy = (enemyPos - playerPosition).normalized; // Direccion normalizada hacia el enemigo

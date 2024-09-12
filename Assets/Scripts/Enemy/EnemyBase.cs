@@ -37,4 +37,7 @@ public abstract class EnemyBase : MonoBehaviour
             mat.SetColor("_EmissionColor", baseColor);
         }
     }
+    
+    protected abstract void die();
+    
 }

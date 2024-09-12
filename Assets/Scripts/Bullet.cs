@@ -6,6 +6,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public float life = 3;
+    public float dmg = 1f;
 
     private void Awake()
     {
@@ -18,7 +19,7 @@ public class Bullet : MonoBehaviour
         var player = other.gameObject.GetComponent<PlayerCombat>();
         if (enemy != null)
         {
-            enemy.GetHit(1);
+            enemy.GetHit(dmg);
         }
         //Debug.Log("Hitted an enemy!");
 
