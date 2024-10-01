@@ -14,7 +14,7 @@
     "com.unity.timeline": "1.7.6",
     "com.unity.ugui": "1.0.0",
     "com.unity.visualscripting": "1.9.4",
-    "moe.meryuhi.effects.fog": "file:C:/Users/agust/Desktop/URPFog/Packages/Fog",
+    "moe.meryuhi.effects.fog": "file:../Assets/Local_Packages/URPFog/Packages/Fog",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",

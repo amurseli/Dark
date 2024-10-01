@@ -200,7 +200,7 @@
       "url": "https://packages.unity.com"
     },
     "moe.meryuhi.effects.fog": {
-      "version": "file:C:/Users/agust/Desktop/URPFog/Packages/Fog",
+      "version": "file:../Assets/Local_Packages/URPFog/Packages/Fog",
       "depth": 0,
       "source": "local",
       "dependencies": {
