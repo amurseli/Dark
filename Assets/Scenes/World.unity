@@ -8626,7 +8626,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159adb5ad187cd541a0731500b7bf8ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slashRange: 15
+  slashRange: 30
   slashDamage: 5
   slashCooldown: 0.01
   slashSpeed: 0.2
@@ -11085,7 +11085,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnRadius: 200
-  spawnRate: 5
+  spawnRate: 2
   basicEnemy: {fileID: 8358902402819165197, guid: fd643f3be5731ec45bde40c746e64d6d,
     type: 3}
 --- !u!1 &1792298518
