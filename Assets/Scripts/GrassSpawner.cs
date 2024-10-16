@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class GrassSpawner : MonoBehaviour
 {
-     public Terrain terrain;
-    public GameObject[] grassPrefabs;  // Array de diferentes tipos de pasto
+    public Terrain terrain;
+    public GameObject[] grassPrefabs;  
     public int textureWidth = 512;
     public int textureHeight = 512;
     public float scale = 10f;
-    public float threshold = 0.5f;  // Umbral general para permitir el spawn
-
-    // Rango de probabilidades para cada tipo de pasto
-    public float[] grassTypeThresholds = new float[] { 0.33f, 0.66f };  // Por defecto para 3 tipos de pasto
+    public float threshold = 0.5f;  
+    
+    public float[] grassTypeThresholds = new float[] { 0.33f, 0.66f };  
+    
+    public float minHeightMultiplier = 0.8f; 
+    public float maxHeightMultiplier = 1.2f; 
+    
+    public float minWidthMultiplier = 0.8f;  
+    public float maxWidthMultiplier = 1.2f;  
 
     void Start()
     {
@@ -22,7 +27,6 @@ public class GrassSpawner : MonoBehaviour
             return;
         }
 
-        // Generar la textura de ruido Perlin
         Texture2D noiseTexture = GeneratePerlinNoiseTexture();
 
         TerrainData terrainData = terrain.terrainData;
@@ -30,60 +34,63 @@ public class GrassSpawner : MonoBehaviour
         float terrainLength = terrainData.size.z;
         Vector3 terrainPosition = terrain.transform.position;
 
-        // Iterar sobre la textura en función de su tamaño
         for (int x = 0; x < textureWidth; x++)
         {
             for (int z = 0; z < textureHeight; z++)
             {
-                // Obtener el color del pixel (x, z) en la textura
                 Color noiseColor = noiseTexture.GetPixel(x, z);
                 float spawnProbability = noiseColor.grayscale;
 
-                // Solo instanciar si el valor de gris es mayor o igual al umbral
                 if (spawnProbability >= threshold)
                 {
-                    // Determinar el tipo de pasto según el valor del ruido
                     GameObject selectedGrass = SelectGrassType(spawnProbability);
 
                     if (selectedGrass != null)
                     {
-                        // Convertir la posición del píxel en coordenadas del terreno
                         float terrainX = Mathf.Lerp(terrainPosition.x, terrainPosition.x + terrainWidth, (float)x / textureWidth);
                         float terrainZ = Mathf.Lerp(terrainPosition.z, terrainPosition.z + terrainLength, (float)z / textureHeight);
 
-                        // Obtener la altura del terreno en esa posición
                         float height = terrain.SampleHeight(new Vector3(terrainX, 0, terrainZ)) + terrainPosition.y;
 
-                        // Crear la posición donde se instanciará el prefab
-                        Vector3 spawnPosition = new Vector3(terrainX, height, terrainZ);
+                        Vector3 spawnPosition = new Vector3(terrainX, height+2, terrainZ);
 
-                        // Instanciar el prefab seleccionado
-                        Instantiate(selectedGrass, spawnPosition, Quaternion.identity);
+                        GameObject grassInstance = Instantiate(selectedGrass, spawnPosition, Quaternion.identity);
+
+                        float randomHeight = GetRandomHeight();
+
+                        float randomWidth = Random.Range(minWidthMultiplier, maxWidthMultiplier);
+
+                        grassInstance.transform.localScale = new Vector3(randomWidth, randomHeight, randomWidth);
                     }
                 }
             }
         }
     }
 
-    // Función para seleccionar el tipo de pasto basado en el valor de ruido
     GameObject SelectGrassType(float noiseValue)
     {
-        // Comparar el valor del ruido con los thresholds de tipos de pasto
         if (noiseValue < grassTypeThresholds[0])
         {
-            return grassPrefabs[0];  // Tipo A
+            return grassPrefabs[0];
         }
         else if (noiseValue < grassTypeThresholds[1])
         {
-            return grassPrefabs[1];  // Tipo B
+            return grassPrefabs[1]; 
         }
         else
         {
-            return grassPrefabs[2];  // Tipo C
+            return grassPrefabs[2]; 
         }
     }
 
-    // Función para generar la textura de ruido Perlin
+    // Genera los pastos altos de manera menos probables
+    float GetRandomHeight()
+    {
+        float randomValue = Random.value; 
+        float heightMultiplier = Mathf.Lerp(minHeightMultiplier, maxHeightMultiplier, randomValue * randomValue); 
+        return heightMultiplier;
+    }
+
     public Texture2D GeneratePerlinNoiseTexture()
     {
         Texture2D noiseTexture = new Texture2D(textureWidth, textureHeight);
