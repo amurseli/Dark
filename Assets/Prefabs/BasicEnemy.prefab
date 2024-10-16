@@ -16,7 +16,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 2c6c6a99a1b07334fa983ad6a08fabfa,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.53
+      value: 21.11
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2c6c6a99a1b07334fa983ad6a08fabfa,
         type: 3}
@@ -247,6 +247,7 @@ MonoBehaviour:
   baseColor: {r: 0.8301887, g: 0.035243843, b: 0.035243843, a: 0}
   hitColor: {r: 0.8584906, g: 0.8584906, b: 0.8584906, a: 0}
   materials: []
+  "da\xF1o": 10
 --- !u!54 &4089528711199960553
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -358,7 +359,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_Intensity: 0.22
-  m_Range: 1000
+  m_Range: 100
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10

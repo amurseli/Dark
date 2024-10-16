@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerSlash : MonoBehaviour
 {
+    private PlayerMovement _movement;
     private Transform cameraPointer;
     private CharacterController controller;
     private bool canSlash = true;
@@ -21,12 +22,14 @@ public class PlayerSlash : MonoBehaviour
     {
         cameraPointer = Camera.main.transform;
         controller = transform.gameObject.GetComponent<CharacterController>();
+        _movement = GetComponentInChildren<PlayerMovement>();
+
     }
 
     IEnumerator DashThroughEnemy(Vector3 startPosition, Vector3 targetPosition, float duration)
     {
         float elapsedTime = 0f;
-
+        _movement.IsInvincible = true;
         while (elapsedTime < duration)
         {
             // Calcula la posición entre el inicio y el destino usando Lerp
@@ -38,6 +41,7 @@ public class PlayerSlash : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+        _movement.IsInvincible = false;
 
         // Asegúrate de llegar al destino final
         //transform.gameObject.GetComponent<PlayerMovement>().removeFallVelocity();

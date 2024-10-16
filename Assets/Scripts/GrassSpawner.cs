@@ -4,20 +4,34 @@ using UnityEngine;
 
 public class GrassSpawner : MonoBehaviour
 {
+    [Header("Terreno y Prefabs")]
     public Terrain terrain;
-    public GameObject[] grassPrefabs;  
+    public GameObject[] grassPrefabs;
+
+    [Header("Textura de Ruido")]
     public int textureWidth = 512;
     public int textureHeight = 512;
+    [Range(1f, 20f)]  
     public float scale = 10f;
-    public float threshold = 0.5f;  
-    
-    public float[] grassTypeThresholds = new float[] { 0.33f, 0.66f };  
-    
-    public float minHeightMultiplier = 0.8f; 
-    public float maxHeightMultiplier = 1.2f; 
-    
-    public float minWidthMultiplier = 0.8f;  
-    public float maxWidthMultiplier = 1.2f;  
+    [Range(0f, 1f)]  
+    public float threshold = 0.5f;
+
+    [Header("Probabilidades de Tipos de Pasto")]
+    [Tooltip("Umbrales para determinar el tipo de pasto basado en el ruido")]
+    public float[] grassTypeThresholds = new float[] { 0.33f, 0.66f };
+
+    [Header("Parámetros de Tamaño del Pasto")]
+    [Range(0.5f, 2f)]  
+    public float minHeightMultiplier = 0.8f;
+    [Range(0.5f, 2f)]  
+    public float maxHeightMultiplier = 1.2f;
+
+    [Range(0.5f, 2f)]  
+    public float minWidthMultiplier = 0.8f;
+    [Range(0.5f, 2f)]  
+    public float maxWidthMultiplier = 1.2f;
+
+    private GameObject grassParent;  
 
     void Start()
     {
@@ -26,6 +40,9 @@ public class GrassSpawner : MonoBehaviour
             Debug.LogError("Terreno o prefabs de pasto no asignados");
             return;
         }
+
+        // Crear el GameObject vacío "pasto"
+        grassParent = new GameObject("pasto");
 
         Texture2D noiseTexture = GeneratePerlinNoiseTexture();
 
@@ -52,15 +69,17 @@ public class GrassSpawner : MonoBehaviour
 
                         float height = terrain.SampleHeight(new Vector3(terrainX, 0, terrainZ)) + terrainPosition.y;
 
-                        Vector3 spawnPosition = new Vector3(terrainX, height+2, terrainZ);
+                        Vector3 spawnPosition = new Vector3(terrainX, height + 1, terrainZ);
 
                         GameObject grassInstance = Instantiate(selectedGrass, spawnPosition, Quaternion.identity);
 
+                        // Ajustar altura y ancho aleatorios
                         float randomHeight = GetRandomHeight();
-
                         float randomWidth = Random.Range(minWidthMultiplier, maxWidthMultiplier);
-
                         grassInstance.transform.localScale = new Vector3(randomWidth, randomHeight, randomWidth);
+
+                        // Asignar el pasto como hijo del GameObject "pasto"
+                        grassInstance.transform.parent = grassParent.transform;
                     }
                 }
             }
@@ -83,7 +102,6 @@ public class GrassSpawner : MonoBehaviour
         }
     }
 
-    // Genera los pastos altos de manera menos probables
     float GetRandomHeight()
     {
         float randomValue = Random.value; 

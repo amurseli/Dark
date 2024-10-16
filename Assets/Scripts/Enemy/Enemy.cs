@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class Enemy : EnemyBase
 {
+    
+    public int daño = 10; 
 
     private GameObject player;
 

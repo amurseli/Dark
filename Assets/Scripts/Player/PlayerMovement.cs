@@ -14,6 +14,13 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;
     private bool canDash = true;
     
+    private bool isInvincible = false;
+    public bool IsInvincible
+    {
+        get { return isInvincible; }
+        set { isInvincible = value; }
+    }
+    
     [Header("Movement Attributes")]
     public float jumpForce = 10f;
     public float dashSpeed = 50f;
