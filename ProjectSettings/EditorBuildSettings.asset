@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/DayNightWorld.unity
+    guid: 8aa0fde8121e87e4bb4dc5770d75309f
+  - enabled: 0
     path: Assets/Scenes/World.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects: {}

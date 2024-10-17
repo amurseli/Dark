@@ -21,14 +21,14 @@ public class GrassSpawner : MonoBehaviour
     public float[] grassTypeThresholds = new float[] { 0.33f, 0.66f };
 
     [Header("Parámetros de Tamaño del Pasto")]
-    [Range(0.5f, 2f)]  
+    [Range(0.5f, 10f)]  
     public float minHeightMultiplier = 0.8f;
-    [Range(0.5f, 2f)]  
+    [Range(0.5f, 10f)]  
     public float maxHeightMultiplier = 1.2f;
 
-    [Range(0.5f, 2f)]  
+    [Range(0.5f, 10f)]  
     public float minWidthMultiplier = 0.8f;
-    [Range(0.5f, 2f)]  
+    [Range(0.5f, 10f)]  
     public float maxWidthMultiplier = 1.2f;
 
     private GameObject grassParent;  

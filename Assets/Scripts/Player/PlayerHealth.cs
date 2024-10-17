@@ -24,6 +24,11 @@ public class PlayerHealth : MonoBehaviour
         {
             receiveDamage(enemy.daño); 
         }
+
+        if (collision.collider.CompareTag("EXP"))
+        {
+            Destroy(collision.gameObject);
+        }
     }
 
     public void receiveDamage(int damage)
