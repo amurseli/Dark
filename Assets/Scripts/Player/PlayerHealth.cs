@@ -11,7 +11,11 @@ public class PlayerHealth : MonoBehaviour
     private void Start()
     {
         _movement = GetComponent<PlayerMovement>();
+        
+        UISingleton.Instance.updateHealth(currentHealth);
     }
+    
+    
     private void OnCollisionEnter(Collision collision)
     {  
         Enemy enemy = collision.gameObject.GetComponent<Enemy>();
@@ -29,7 +33,8 @@ public class PlayerHealth : MonoBehaviour
             return;
         }
         currentHealth -= damage;
-        Debug.Log("Player received " + damage + " damage! Current Health: " + currentHealth);
+        
+        UISingleton.Instance.updateHealth(currentHealth);
 
         if (currentHealth <= 0)
         {

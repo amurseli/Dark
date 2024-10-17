@@ -7,6 +7,7 @@ public class UISingleton : MonoBehaviour
 {
     private static UISingleton _instance;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI healthText;
 
     public static UISingleton Instance
     {
@@ -45,5 +46,10 @@ public class UISingleton : MonoBehaviour
     public void addScore()
     {
         scoreText.text = (int.Parse(scoreText.text) + 1).ToString();
+    }
+    
+    public void updateHealth(int curr)
+    {
+        healthText.text = curr.ToString();
     }
 }
