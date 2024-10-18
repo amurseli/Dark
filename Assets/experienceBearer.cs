@@ -42,7 +42,6 @@ public class experienceBearer : MonoBehaviour
         {
             if (collider.CompareTag("Player"))
             {
-                Debug.Log("PLAYER FOUND");
                 return true; 
             }
         }
@@ -51,7 +50,6 @@ public class experienceBearer : MonoBehaviour
 
     private void MoveTowardsPlayer()
     {
-        Debug.Log("MOVING TOWARDS PLAYER");
         Vector3 direction = (player.transform.position - transform.position).normalized;
         transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
     }
