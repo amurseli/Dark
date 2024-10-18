@@ -248,6 +248,8 @@ MonoBehaviour:
   hitColor: {r: 0.8584906, g: 0.8584906, b: 0.8584906, a: 0}
   materials: []
   "da\xF1o": 10
+  expOrbPrefab: {fileID: 6549144822618512675, guid: 137f930dd476d9648af1660511efde86,
+    type: 3}
 --- !u!54 &4089528711199960553
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -64,7 +64,10 @@ public class experienceBearer : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        expManager.addExperience(experienceAmount);
-        Destroy(gameObject);
+        if (other.CompareTag("Player"))
+        {
+            expManager.addExperience(experienceAmount);
+            Destroy(gameObject);
+        }
     }
 }

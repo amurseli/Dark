@@ -23,6 +23,8 @@ public class Enemy : EnemyBase
     private bool wiggleExists;
     private float stuckTimer = -1;
     private Rigidbody rb;
+    
+    public GameObject expOrbPrefab;
 
     private void Start()
     {
@@ -71,6 +73,7 @@ public class Enemy : EnemyBase
 
     protected override void die()
     {
+        var expOrb = Instantiate(expOrbPrefab, transform.position, Quaternion.identity);
         UISingleton.Instance.addScore();
         Destroy(gameObject);
     }
